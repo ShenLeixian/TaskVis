@@ -1,0 +1,237 @@
+{
+        "intents": [
+                {
+                        "tag": "change_over_time",
+                        "patterns": [
+                                "change over time",
+                                "time series",
+                                "时序变化",
+                                "时间"
+                        ]
+                },
+                {
+                        "tag": "characterize_distribution",
+                        "patterns": [
+                                "characterize distribution",
+                                "Characterize the distribution of the column’s values over the set",
+                                "分布",
+                                "直方图"
+                        ]
+                },
+                {
+                        "tag": "cluster",
+                        "patterns": [
+                                "cluster",
+                                "Find clusters of similar attribute values or classify the data",
+                                "gather",
+                                "class",
+                                "category",
+                                "聚类",
+                                "数据集中的相似值",
+                                "聚合"
+                        ]
+                },
+                {
+                        "tag": "comparison",
+                        "patterns": [
+                                "comparison",
+                                "compare",
+                                "Give emphasis to comparison on different entities",
+                                "parallel",
+                                "confrontation",
+                                "对比",
+                                "比较",
+                                "更",
+                                "相对",
+                                "大小"
+                        ]
+                },
+                {
+                        "tag": "compute_derived_value",
+                        "patterns": [
+                                "compute derived value",
+                                "Compute an aggregate or binned numeric derived Value",
+                                "originate",
+                                "surprise",
+                                "求和",
+                                "平均值",
+                                "计数",
+                                "分桶",
+                                "推导值",
+                                "意外",
+                                "惊喜",
+                                "有趣"
+                        ]
+                },
+                {
+                        "tag": "correlate",
+                        "patterns": [
+                                "correlate",
+                                "relation between",
+                                "Determine useful relationships between the columns",
+                                "connect",
+                                "nexus",
+                                "关系",
+                                "关联"
+                        ]
+                },
+                {
+                        "tag": "determine_range",
+                        "patterns": [
+                                "determine range",
+                                "Find the span of values within the set",
+                                "scope",
+                                "area",
+                                "tick",
+                                "boxplot",
+                                "取值",
+                                "范围",
+                                "箱形图"
+
+                        ]
+                },
+                {
+                        "tag": "deviation",
+                        "patterns": [
+                                "deviation",
+                                "Compare data with certain value like zero or mean",
+                                "declination",
+                                "bias",
+                                "偏差",
+                                "对比均值",
+                                "偏离",
+                                "对比零"
+                        ]
+                },
+                {
+                        "tag": "error_range",
+                        "patterns": [
+                                "error range",
+                                "Summarizes an error range of quantitative values",
+                                "errer bar",
+                                "error box",
+                                "误差",
+                                "误差线"
+                        ]
+                },
+                {
+                        "tag": "find_anomalies",
+                        "patterns": [
+                                "find anomalies",
+                                "Identify any anomalies within the dataset",
+                                "Outlier",
+                                "abnormal",
+                                "unusual",
+                                "odd",
+                                "deviant",
+                                "aberrant",
+                                "irregular",
+                                "异常值",
+                                "不正常",
+                                "突出",
+                                "奇怪",
+                                "怪异"
+                        ]
+                },
+                {
+                        "tag": "find_extremum",
+                        "patterns": [
+                                "find extremum",
+                                "Find extreme values of data attribute",
+                                "extreme value",
+                                "极值",
+                                "最"
+                        ]
+                },
+                {
+                        "tag": "magnitude",
+                        "patterns": [
+                                "magnitude",
+                                "Show relative or absolute size comparisons",
+                                "size",
+                                "dimension",
+                                "bigness",
+                                "measurement",
+                                "大小",
+                                "相对大小",
+                                "绝对大小"
+                        ]
+                },
+                {
+                        "tag": "part_to_whole",
+                        "patterns": [
+                                "part to whole",
+                                "Show component elements of a single entity",
+                                "How to divide into parts",
+                                "section",
+                                "piece",
+                                "partition",
+                                "measure off",
+                                "compartmentalize",
+                                "部分与整体",
+                                "组成",
+                                "拆分",
+                                "合并"
+                        ]
+                },
+                {
+                        "tag": "retrieve_value",
+                        "patterns": [
+                                "retrieve value",
+                                "Find values of columns",
+                                "Obtain value",
+                                "取值",
+                                "获取",
+                                "具体"
+                        ]
+                },
+                {
+                        "tag": "sort",
+                        "patterns": [
+                                "sort",
+                                "Rank data according to some ordinal metric",
+                                "sequence",
+                                "order",
+                                "turn",
+                                "gradation",
+                                "regular succession",
+                                "in succession",
+                                "one after another",
+                                "from low to high",
+                                "from small to large",
+                                "排序",
+                                "顺序",
+                                "从低到高",
+                                "从大到小"
+                        ]
+                },
+                {
+                        "tag": "spatial",
+                        "patterns": [
+                                "spatial",
+                                "Show spatial data like latitude and longitude",
+                                "geography",
+                                "geoshape",
+                                "map",
+                                "空间",
+                                "地理",
+                                "地图",
+                                "经度",
+                                "纬度",
+                                "经纬度"
+                        ]
+                },
+                {
+                        "tag": "trend",
+                        "patterns": [
+                                "trend",
+                                "Use regression or loess to show the variation trend of data",
+                                "tendency",
+                                "current",
+                                "趋势",
+                                "回归",
+                                "变化趋势"
+                        ]
+                }
+        ]
+}

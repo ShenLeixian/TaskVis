@@ -1,0 +1,600 @@
+{
+    "markEditOps": {
+        "ARC_AREA": {
+            "name": "ARC_AREA",
+            "cost": 0.08
+        },
+        "ARC_BAR": {
+            "name": "ARC_BAR",
+            "cost": 0.06
+        },
+        "ARC_LINE": {
+            "name": "ARC_LINE",
+            "cost": 0.07
+        },
+        "ARC_POINT": {
+            "name": "ARC_POINT",
+            "cost": 0.05
+        },
+        "ARC_RECT": {
+            "name": "ARC_RECT",
+            "cost": 0.05
+        },
+        "AREA_BAR": {
+            "name": "AREA_BAR",
+            "cost": 0.03
+        },
+        "AREA_LINE": {
+            "name": "AREA_LINE",
+            "cost": 0.02
+        },
+        "AREA_POINT": {
+            "name": "AREA_POINT",
+            "cost": 0.04
+        },
+        "AREA_RECT": {
+            "name": "AREA_RECT",
+            "cost": 0.04
+        },
+        "BAR_LINE": {
+            "name": "BAR_LINE",
+            "cost": 0.04
+        },
+        "BAR_POINT": {
+            "name": "BAR_POINT",
+            "cost": 0.02
+        },
+        "BAR_RECT": {
+            "name": "BAR_RECT",
+            "cost": 0.02
+        },
+        "LINE_POINT": {
+            "name": "LINE_POINT",
+            "cost": 0.03
+        },
+        "LINE_RECT": {
+            "name": "LINE_RECT",
+            "cost": 0.03
+        },
+        "POINT_RECT": {
+            "name": "POINT_RECT",
+            "cost": 0.01
+        }
+    },
+    "transformEditOps": {
+        "SCALE": {
+            "name": "SCALE",
+            "cost": 0.6
+        },
+        "SORT": {
+            "name": "SORT",
+            "cost": 0.61
+        },
+        "BIN": {
+            "name": "BIN",
+            "cost": 0.62
+        },
+        "STACK_ZERO": {
+            "name": "STACK_ZERO",
+            "cost": 0.63
+        },
+        "STACK_NORMALIZ": {
+            "name": "STACK_NORMALIZ",
+            "cost": 0.64
+        },
+        "AGGREGATE_COUNT": {
+            "name": "AGGREGATE_COUNT",
+            "cost": 0.65
+        },
+        "AGGREGATE_MEAN": {
+            "name": "AGGREGATE_MEAN",
+            "cost": 0.66
+        },
+        "AGGREGATE_SUM": {
+            "name": "AGGREGATE_SUM",
+            "cost": 0.67
+        },
+        "TRANSFORM": {
+            "name": "TRANSFORM",
+            "cost": 0.68
+        },
+        "ADD_FILTER": {
+            "name": "ADD_FILTER",
+            "cost": 0.7
+        },
+        "REMOVE_FILTER": {
+            "name": "REMOVE_FILTER",
+            "cost": 0.7
+        },
+        "MODIFY_FILTER": {
+            "name": "MODIFY_FILTER",
+            "cost": 0.69
+        }
+    },
+    "encodingEditOps": {
+        "ADD_X": {
+            "name": "ADD_X",
+            "cost": 8.04
+        },
+        "ADD_THETA": {
+            "name": "ADD_THETA",
+            "cost": 8.04
+        },
+        "ADD_LONGITUDE": {
+            "name": "ADD_LONGITUDE",
+            "cost": 8.04
+        },
+        "ADD_LATITUDE": {
+            "name": "ADD_LATITUDE",
+            "cost": 8.04
+        },
+        "ADD_Y": {
+            "name": "ADD_Y",
+            "cost": 8.04
+        },
+        "ADD_COLOR": {
+            "name": "ADD_COLOR",
+            "cost": 8
+        },
+        "ADD_SHAPE": {
+            "name": "ADD_SHAPE",
+            "cost": 7.96
+        },
+        "ADD_SIZE": {
+            "name": "ADD_SIZE",
+            "cost": 7.98
+        },
+        "ADD_ROW": {
+            "name": "ADD_ROW",
+            "cost": 8.02
+        },
+        "ADD_COLUMN": {
+            "name": "ADD_COLUMN",
+            "cost": 8.02
+        },
+        "ADD_TEXT": {
+            "name": "ADD_TEXT",
+            "cost": 7.94
+        },
+        "ADD_X_COUNT": {
+            "name": "ADD_X_COUNT",
+            "cost": 8.03
+        },
+        "ADD_Y_COUNT": {
+            "name": "ADD_Y_COUNT",
+            "cost": 8.03
+        },
+        "ADD_COLOR_COUNT": {
+            "name": "ADD_COLOR_COUNT",
+            "cost": 7.99
+        },
+        "ADD_SHAPE_COUNT": {
+            "name": "ADD_SHAPE_COUNT",
+            "cost": 7.95
+        },
+        "ADD_SIZE_COUNT": {
+            "name": "ADD_SIZE_COUNT",
+            "cost": 7.97
+        },
+        "ADD_ROW_COUNT": {
+            "name": "ADD_ROW_COUNT",
+            "cost": 8.01
+        },
+        "ADD_COLUMN_COUNT": {
+            "name": "ADD_COLUMN_COUNT",
+            "cost": 8.01
+        },
+        "ADD_TEXT_COUNT": {
+            "name": "ADD_TEXT_COUNT",
+            "cost": 7.93
+        },
+        "REMOVE_X_COUNT": {
+            "name": "REMOVE_X_COUNT",
+            "cost": 8.03
+        },
+        "REMOVE_Y_COUNT": {
+            "name": "REMOVE_Y_COUNT",
+            "cost": 8.03
+        },
+        "REMOVE_COLOR_COUNT": {
+            "name": "REMOVE_COLOR_COUNT",
+            "cost": 7.99
+        },
+        "REMOVE_SHAPE_COUNT": {
+            "name": "REMOVE_SHAPE_COUNT",
+            "cost": 7.95
+        },
+        "REMOVE_SIZE_COUNT": {
+            "name": "REMOVE_SIZE_COUNT",
+            "cost": 7.97
+        },
+        "REMOVE_ROW_COUNT": {
+            "name": "REMOVE_ROW_COUNT",
+            "cost": 8.01
+        },
+        "REMOVE_COLUMN_COUNT": {
+            "name": "REMOVE_COLUMN_COUNT",
+            "cost": 8.01
+        },
+        "REMOVE_TEXT_COUNT": {
+            "name": "REMOVE_TEXT_COUNT",
+            "cost": 7.93
+        },
+        "REMOVE_X": {
+            "name": "REMOVE_X",
+            "cost": 8.04
+        },
+        "REMOVE_THETA": {
+            "name": "REMOVE_THETA",
+            "cost": 8.04
+        },
+        "REMOVE_LONGITUDE": {
+            "name": "REMOVE_LONGITUDE",
+            "cost": 8.04
+        },
+        "REMOVE_LATITUDE": {
+            "name": "REMOVE_LATITUDE",
+            "cost": 8.04
+        },
+        "REMOVE_Y": {
+            "name": "REMOVE_Y",
+            "cost": 8.04
+        },
+        "REMOVE_COLOR": {
+            "name": "REMOVE_COLOR",
+            "cost": 8
+        },
+        "REMOVE_SHAPE": {
+            "name": "REMOVE_SHAPE",
+            "cost": 7.96
+        },
+        "REMOVE_SIZE": {
+            "name": "REMOVE_SIZE",
+            "cost": 7.98
+        },
+        "REMOVE_ROW": {
+            "name": "REMOVE_ROW",
+            "cost": 8.02
+        },
+        "REMOVE_COLUMN": {
+            "name": "REMOVE_COLUMN",
+            "cost": 8.02
+        },
+        "REMOVE_TEXT": {
+            "name": "REMOVE_TEXT",
+            "cost": 7.94
+        },
+        "MODIFY_X": {
+            "name": "MODIFY_X",
+            "cost": 8.16
+        },
+        "MODIFY_Y": {
+            "name": "MODIFY_Y",
+            "cost": 8.16
+        },
+        "MODIFY_COLOR": {
+            "name": "MODIFY_COLOR",
+            "cost": 8.12
+        },
+        "MODIFY_SHAPE": {
+            "name": "MODIFY_SHAPE",
+            "cost": 8.08
+        },
+        "MODIFY_SIZE": {
+            "name": "MODIFY_SIZE",
+            "cost": 8.1
+        },
+        "MODIFY_ROW": {
+            "name": "MODIFY_ROW",
+            "cost": 8.14
+        },
+        "MODIFY_COLUMN": {
+            "name": "MODIFY_COLUMN",
+            "cost": 8.14
+        },
+        "MODIFY_TEXT": {
+            "name": "MODIFY_TEXT",
+            "cost": 8.06
+        },
+        "MODIFY_X_ADD_COUNT": {
+            "name": "MODIFY_X_ADD_COUNT",
+            "cost": 8.15
+        },
+        "MODIFY_Y_ADD_COUNT": {
+            "name": "MODIFY_Y_ADD_COUNT",
+            "cost": 8.15
+        },
+        "MODIFY_COLOR_ADD_COUNT": {
+            "name": "MODIFY_COLOR_ADD_COUNT",
+            "cost": 8.11
+        },
+        "MODIFY_SHAPE_ADD_COUNT": {
+            "name": "MODIFY_SHAPE_ADD_COUNT",
+            "cost": 8.07
+        },
+        "MODIFY_SIZE_ADD_COUNT": {
+            "name": "MODIFY_SIZE_ADD_COUNT",
+            "cost": 8.09
+        },
+        "MODIFY_ROW_ADD_COUNT": {
+            "name": "MODIFY_ROW_ADD_COUNT",
+            "cost": 8.13
+        },
+        "MODIFY_COLUMN_ADD_COUNT": {
+            "name": "MODIFY_COLUMN_ADD_COUNT",
+            "cost": 8.13
+        },
+        "MODIFY_TEXT_ADD_COUNT": {
+            "name": "MODIFY_TEXT_ADD_COUNT",
+            "cost": 8.05
+        },
+        "MODIFY_X_REMOVE_COUNT": {
+            "name": "MODIFY_X_REMOVE_COUNT",
+            "cost": 8.15
+        },
+        "MODIFY_Y_REMOVE_COUNT": {
+            "name": "MODIFY_Y_REMOVE_COUNT",
+            "cost": 8.15
+        },
+        "MODIFY_COLOR_REMOVE_COUNT": {
+            "name": "MODIFY_COLOR_REMOVE_COUNT",
+            "cost": 8.11
+        },
+        "MODIFY_SHAPE_REMOVE_COUNT": {
+            "name": "MODIFY_SHAPE_REMOVE_COUNT",
+            "cost": 8.07
+        },
+        "MODIFY_SIZE_REMOVE_COUNT": {
+            "name": "MODIFY_SIZE_REMOVE_COUNT",
+            "cost": 8.09
+        },
+        "MODIFY_ROW_REMOVE_COUNT": {
+            "name": "MODIFY_ROW_REMOVE_COUNT",
+            "cost": 8.13
+        },
+        "MODIFY_COLUMN_REMOVE_COUNT": {
+            "name": "MODIFY_COLUMN_REMOVE_COUNT",
+            "cost": 8.13
+        },
+        "MODIFY_TEXT_REMOVE_COUNT": {
+            "name": "MODIFY_TEXT_REMOVE_COUNT",
+            "cost": 8.05
+        },
+        "MOVE_X_ROW": {
+            "name": "MOVE_X_ROW",
+            "cost": 7.9
+        },
+        "MOVE_X_COLUMN": {
+            "name": "MOVE_X_COLUMN",
+            "cost": 7.88
+        },
+        "MOVE_X_SIZE": {
+            "name": "MOVE_X_SIZE",
+            "cost": 7.91
+        },
+        "MOVE_X_SHAPE": {
+            "name": "MOVE_X_SHAPE",
+            "cost": 7.91
+        },
+        "MOVE_X_COLOR": {
+            "name": "MOVE_X_COLOR",
+            "cost": 7.91
+        },
+        "MOVE_X_Y": {
+            "name": "MOVE_X_Y",
+            "cost": 7.89
+        },
+        "MOVE_X_TEXT": {
+            "name": "MOVE_X_TEXT",
+            "cost": 7.91
+        },
+        "MOVE_Y_ROW": {
+            "name": "MOVE_Y_ROW",
+            "cost": 7.88
+        },
+        "MOVE_Y_COLUMN": {
+            "name": "MOVE_Y_COLUMN",
+            "cost": 7.9
+        },
+        "MOVE_Y_SIZE": {
+            "name": "MOVE_Y_SIZE",
+            "cost": 7.91
+        },
+        "MOVE_Y_SHAPE": {
+            "name": "MOVE_Y_SHAPE",
+            "cost": 7.91
+        },
+        "MOVE_Y_COLOR": {
+            "name": "MOVE_Y_COLOR",
+            "cost": 7.91
+        },
+        "MOVE_Y_X": {
+            "name": "MOVE_Y_X",
+            "cost": 7.89
+        },
+        "MOVE_Y_TEXT": {
+            "name": "MOVE_Y_TEXT",
+            "cost": 7.91
+        },
+        "MOVE_COLOR_ROW": {
+            "name": "MOVE_COLOR_ROW",
+            "cost": 7.92
+        },
+        "MOVE_COLOR_COLUMN": {
+            "name": "MOVE_COLOR_COLUMN",
+            "cost": 7.92
+        },
+        "MOVE_COLOR_SIZE": {
+            "name": "MOVE_COLOR_SIZE",
+            "cost": 7.88
+        },
+        "MOVE_COLOR_SHAPE": {
+            "name": "MOVE_COLOR_SHAPE",
+            "cost": 7.88
+        },
+        "MOVE_COLOR_Y": {
+            "name": "MOVE_COLOR_Y",
+            "cost": 7.91
+        },
+        "MOVE_COLOR_X": {
+            "name": "MOVE_COLOR_X",
+            "cost": 7.91
+        },
+        "MOVE_COLOR_TEXT": {
+            "name": "MOVE_COLOR_TEXT",
+            "cost": 7.88
+        },
+        "MOVE_SHAPE_ROW": {
+            "name": "MOVE_SHAPE_ROW",
+            "cost": 7.92
+        },
+        "MOVE_SHAPE_COLUMN": {
+            "name": "MOVE_SHAPE_COLUMN",
+            "cost": 7.92
+        },
+        "MOVE_SHAPE_SIZE": {
+            "name": "MOVE_SHAPE_SIZE",
+            "cost": 7.88
+        },
+        "MOVE_SHAPE_COLOR": {
+            "name": "MOVE_SHAPE_COLOR",
+            "cost": 7.88
+        },
+        "MOVE_SHAPE_Y": {
+            "name": "MOVE_SHAPE_Y",
+            "cost": 7.91
+        },
+        "MOVE_SHAPE_X": {
+            "name": "MOVE_SHAPE_X",
+            "cost": 7.91
+        },
+        "MOVE_SHAPE_TEXT": {
+            "name": "MOVE_SHAPE_TEXT",
+            "cost": 7.88
+        },
+        "MOVE_SIZE_ROW": {
+            "name": "MOVE_SIZE_ROW",
+            "cost": 7.92
+        },
+        "MOVE_SIZE_COLUMN": {
+            "name": "MOVE_SIZE_COLUMN",
+            "cost": 7.92
+        },
+        "MOVE_SIZE_SHAPE": {
+            "name": "MOVE_SIZE_SHAPE",
+            "cost": 7.88
+        },
+        "MOVE_SIZE_COLOR": {
+            "name": "MOVE_SIZE_COLOR",
+            "cost": 7.88
+        },
+        "MOVE_SIZE_Y": {
+            "name": "MOVE_SIZE_Y",
+            "cost": 7.91
+        },
+        "MOVE_SIZE_X": {
+            "name": "MOVE_SIZE_X",
+            "cost": 7.91
+        },
+        "MOVE_SIZE_TEXT": {
+            "name": "MOVE_SIZE_TEXT",
+            "cost": 7.88
+        },
+        "MOVE_TEXT_ROW": {
+            "name": "MOVE_TEXT_ROW",
+            "cost": 7.92
+        },
+        "MOVE_TEXT_COLUMN": {
+            "name": "MOVE_TEXT_COLUMN",
+            "cost": 7.92
+        },
+        "MOVE_TEXT_SHAPE": {
+            "name": "MOVE_TEXT_SHAPE",
+            "cost": 7.88
+        },
+        "MOVE_TEXT_COLOR": {
+            "name": "MOVE_TEXT_COLOR",
+            "cost": 7.88
+        },
+        "MOVE_TEXT_Y": {
+            "name": "MOVE_TEXT_Y",
+            "cost": 7.91
+        },
+        "MOVE_TEXT_X": {
+            "name": "MOVE_TEXT_X",
+            "cost": 7.91
+        },
+        "MOVE_TEXT_SIZE": {
+            "name": "MOVE_TEXT_SIZE",
+            "cost": 7.88
+        },
+        "MOVE_COLUMN_ROW": {
+            "name": "MOVE_COLUMN_ROW",
+            "cost": 7.89
+        },
+        "MOVE_COLUMN_SIZE": {
+            "name": "MOVE_COLUMN_SIZE",
+            "cost": 7.92
+        },
+        "MOVE_COLUMN_SHAPE": {
+            "name": "MOVE_COLUMN_SHAPE",
+            "cost": 7.92
+        },
+        "MOVE_COLUMN_COLOR": {
+            "name": "MOVE_COLUMN_COLOR",
+            "cost": 7.92
+        },
+        "MOVE_COLUMN_Y": {
+            "name": "MOVE_COLUMN_Y",
+            "cost": 7.9
+        },
+        "MOVE_COLUMN_X": {
+            "name": "MOVE_COLUMN_X",
+            "cost": 7.88
+        },
+        "MOVE_COLUMN_TEXT": {
+            "name": "MOVE_COLUMN_TEXT",
+            "cost": 7.92
+        },
+        "MOVE_ROW_COLUMN": {
+            "name": "MOVE_ROW_COLUMN",
+            "cost": 7.89
+        },
+        "MOVE_ROW_SIZE": {
+            "name": "MOVE_ROW_SIZE",
+            "cost": 7.92
+        },
+        "MOVE_ROW_SHAPE": {
+            "name": "MOVE_ROW_SHAPE",
+            "cost": 7.92
+        },
+        "MOVE_ROW_COLOR": {
+            "name": "MOVE_ROW_COLOR",
+            "cost": 7.92
+        },
+        "MOVE_ROW_Y": {
+            "name": "MOVE_ROW_Y",
+            "cost": 7.88
+        },
+        "MOVE_ROW_X": {
+            "name": "MOVE_ROW_X",
+            "cost": 7.9
+        },
+        "MOVE_ROW_TEXT": {
+            "name": "MOVE_ROW_TEXT",
+            "cost": 7.92
+        },
+        "SWAP_X_Y": {
+            "name": "SWAP_X_Y",
+            "cost": 7.87
+        },
+        "SWAP_ROW_COLUMN": {
+            "name": "SWAP_ROW_COLUMN",
+            "cost": 7.86
+        },
+        "ceiling": {
+            "cost": 81.6,
+            "alternatingCost": 89.76
+        }
+    }
+}
