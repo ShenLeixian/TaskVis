@@ -28,11 +28,12 @@
                  :id="generate_id('data-item-', index)"
                  v-for="(item, index) in data_list"
                  v-bind:key="item.field"
-                 @click="choose_data_item(item, index)"
-                 >
-              <div class="data-item-icon" :id="generate_id('data-item-icon-' ,index)">{{data_type[item.type]}}</div>
+                 @click="choose_data_item(item, index)">
+              <div class="data-item-icon"
+                   :id="generate_id('data-item-icon-' ,index)">{{data_type[item.type]}}</div>
               <div class="data-item-text">
-                <div class="data-item-field">{{item.field}}</div>
+                <div class="data-item-field"
+                     :id="generate_id('data-item-field-', index)">{{item.field}}</div>
                 <div class="data-item-type">{{item.type}}</div>
               </div>
             </div>
@@ -90,9 +91,12 @@
             <div class="task-item"
                  :id="generate_id('task-item-', index)"
                  v-for="(item, index) in task_list"
-                 v-bind:key="item.task">
-              <el-checkbox :label="item.task" class="task-item-name" :id="generate_id('task-item-name-', index)" @change="choose_task_item(item, index)"></el-checkbox>
-              <div class="task-item-description" :id="generate_id('task-item-description-', index)">{{item.description}}</div>
+                 v-bind:key="item.task"
+                 @click="choose_task_item(item, index)">
+              <div class="task-item-name"
+                   :id="generate_id('task-item-name-', index)">{{item.task}}</div>
+              <div class="task-item-description"
+                   :id="generate_id('task-item-description-', index)">{{item.description}}</div>
             </div>
           </div>
         </el-card>
@@ -188,7 +192,8 @@ export default {
       ranking_scheme_radio: '1',
       data_list: [],
       chosen_data_items: [],
-      chosen_task_items: []
+      chosen_task_items: [],
+      task_checked: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
     }
   },
   methods: {
@@ -214,31 +219,38 @@ export default {
     choose_data_item (item, index) {
       // TODO 选中数据种类
       let icon = document.getElementById('data-item-icon-' + index)
+      let field = document.getElementById('data-item-field-' + index)
       for (let i = 0; i < this.chosen_data_items.length; i++) {
         if (this.chosen_data_items[i].field === item.field) {
           // 已选中，现在撤销选中
           this.chosen_data_items.splice(i, 1)
-          icon.style['background'] = 'dodgerblue'
+          icon.style['background'] = 'darkgrey'
+          field.style['color'] = 'black'
           // console.log(this.chosen_data_items)
           return
         }
       }
       // 没选中，选中对象
       this.chosen_data_items.push(item)
-      icon.style.background = 'limegreen'
+      icon.style.background = 'dodgerblue'
+      field.style['color'] = 'dodgerblue'
       // console.log(this.chosen_data_items)
     },
     choose_task_item (item, index) {
+      // let taskItem = document.getElementById('task-item-' + index)
+      let name = document.getElementById('task-item-name-' + index)
       for (let i = 0; i < this.chosen_task_items.length; i++) {
         if (this.chosen_task_items[i].task === item.task) {
           // 已选中，现在撤销选中
           this.chosen_task_items.splice(i, 1)
+          name.style['color'] = 'black'
           console.log(this.chosen_task_items)
           return
         }
       }
       // 没选中，选中对象
       this.chosen_task_items.push(item)
+      name.style['color'] = 'dodgerblue'
       console.log(this.chosen_task_items)
     },
     generate_id (baseId, index) {
@@ -266,14 +278,14 @@ export default {
 }
 
 #left-part {
-  width: 350px;
+  width: 340px;
   display: flex;
   flex-direction: column;
   margin-right: 5px;
 }
 
 #mid-part {
-  width: 350px;
+  width: 300px;
   margin-right: 5px;
   min-height: 90%;
 }
@@ -308,7 +320,7 @@ export default {
   padding: 5px 0 5px 5px;
 }
 
-.data-item:hover{
+.data-item:hover {
   background-color: gainsboro;
 }
 
@@ -317,36 +329,36 @@ export default {
   height: 40px;
   width: 40px;
   color: white;
-  background: dodgerblue;
+  background: darkgrey;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 10px;
 }
 
-.data-item-type{
+.data-item-type {
   color: darkgray;
   font-size: small;
 }
 
-.data-item-text{
+.data-item-text {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
 }
 
-.task-item{
+.task-item {
   display: flex;
   flex-direction: column;
   padding: 5px 5px 5px 5px;
 }
 
-.task-item:hover{
+.task-item:hover {
   background-color: gainsboro;
 }
 
-.task-item-description{
+.task-item-description {
   color: darkgray;
   font-size: small;
 }
