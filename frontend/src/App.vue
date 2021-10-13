@@ -214,6 +214,16 @@ export default {
 
     recommendation () {
       // TODO 将选中的数据发送到服务器，获取推荐图表
+      let requestData = {}
+      requestData['ColumnTypes'] = this.chosen_data_items
+      requestData['task'] = this.chosen_task_items
+      requestData['dataset'] = this.dataset_value
+      requestData['mode'] = (this.recommendation_mode_radio === 1) ? 2 : 5
+
+      this.$axios.post('api/Reco', requestData)
+        .then(Response => {
+          console.log(Response.data)
+        })
     },
 
     choose_data_item (item, index) {
@@ -240,7 +250,7 @@ export default {
       // let taskItem = document.getElementById('task-item-' + index)
       let name = document.getElementById('task-item-name-' + index)
       for (let i = 0; i < this.chosen_task_items.length; i++) {
-        if (this.chosen_task_items[i].task === item.task) {
+        if (this.chosen_task_items[i] === this.transform_task_name(item.task)) {
           // 已选中，现在撤销选中
           this.chosen_task_items.splice(i, 1)
           name.style['color'] = 'black'
@@ -249,12 +259,15 @@ export default {
         }
       }
       // 没选中，选中对象
-      this.chosen_task_items.push(item)
+      this.chosen_task_items.push(this.transform_task_name(item.task))
       name.style['color'] = 'dodgerblue'
       console.log(this.chosen_task_items)
     },
     generate_id (baseId, index) {
       return baseId + index
+    },
+    transform_task_name (taskName) {
+      return taskName.toLowerCase().replace(/ /g, '_')
     }
   }
 }
