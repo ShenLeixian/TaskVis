@@ -120,6 +120,21 @@ export default {
       }, {
         value: 'weather',
         label: 'Weather'
+      }, {
+        value: 'covid',
+        label: 'Covid'
+      }, {
+        value: 'AirpotDeley',
+        label: 'Airport Delay'
+      }, {
+        value: 'driving',
+        label: 'Driving'
+      }, {
+        value: 'HappinessRanking',
+        label: 'Happiness Ranking'
+      }, {
+        value: 'HollywoodsStories',
+        label: 'Hollywood Stories'
       }],
       data_type: {
         'temporal': 'T',
