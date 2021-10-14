@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="page">
     <div id="title-bar">
       <div id="title">TaskVis: Task-oriented Visualization Recommendation</div>
     </div>
@@ -50,8 +50,8 @@
             <div class="setting-title">Max Number of Charts</div>
             <el-input-number id="max-number-of-charts-input"
                              v-model="max_number_of_charts"
-                             :min="1"
-                             size="medium"></el-input-number>
+                             size="mini"
+                             :min="1"></el-input-number>
           </div>
           <el-divider></el-divider>
           <div id="recommendation-mode">
@@ -101,7 +101,18 @@
           </div>
         </el-card>
       </div>
-      <div id="right-part"></div>
+      <div id="right-part">
+        <div id="right-setting-part">
+          <el-switch v-model="display_by_task" active-text="Display by task"></el-switch>
+          <div id="task_tag_box">
+            <el-tag class="task-tag" v-for="item in chosen_task_items" v-bind:key="item">{{transform_from_task_name(item)}}</el-tag>
+          </div>
+        </div>
+        <el-divider></el-divider>
+        <div id="chart-part">
+
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -208,7 +219,9 @@ export default {
       data_list: [],
       chosen_data_items: [],
       chosen_task_items: [],
-      task_checked: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+      task_checked: [false, false, false, false, false, false, false, false,
+        false, false, false, false, false, false, false, false, false],
+      display_by_task: false
     }
   },
   methods: {
@@ -285,12 +298,21 @@ export default {
     },
     transform_task_name (taskName) {
       return taskName.toLowerCase().replace(/ /g, '_')
+    },
+    transform_from_task_name (transTaskName) {
+      return transTaskName.replace(/_/g, ' ')
     }
   }
 }
 </script>
 
 <style>
+#page {
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  height: 1200px;
+}
+
 #title {
   font-size: 25px;
   color: white;
@@ -304,7 +326,8 @@ export default {
 #main-part {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  /*align-items: stretch;*/
+  /*height: 100%*/
 }
 
 #left-part {
@@ -316,18 +339,25 @@ export default {
 
 #mid-part {
   width: 300px;
+  flex-shrink: 0;
   margin-right: 5px;
-  min-height: 90%;
+  display: flex;
+  flex-direction: column;
 }
 
 #right-part {
+  display: flex;
+  flex-direction: column;
   width: auto;
+  flex-shrink: 1;
+  flex-grow: 1;
 }
 
 #max-number-of-charts {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .card {
@@ -335,11 +365,18 @@ export default {
 }
 
 .setting-title {
-  margin-bottom: 10px;
+  margin-right: 10px;
+  font-size: 13px;
 }
 
 #task-list-card {
-  min-height: 90%;
+  /*max-height: 80%;*/
+  overflow-y: auto;
+}
+
+#data-box{
+  max-height: 30%;
+  overflow-y:auto;
 }
 
 .data-item {
@@ -352,6 +389,7 @@ export default {
 
 .data-item:hover {
   background-color: gainsboro;
+  cursor: pointer;
 }
 
 .data-item-icon {
@@ -389,10 +427,22 @@ export default {
 
 .task-item:hover {
   background-color: gainsboro;
+  cursor: pointer;
 }
 
 .task-item-description {
   color: darkgray;
   font-size: small;
+}
+
+#task_tag_box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 5px 0 5px 0;
+}
+
+.task-tag {
+  margin: 2px 5px 2px 0;
 }
 </style>
