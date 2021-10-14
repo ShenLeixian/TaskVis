@@ -247,13 +247,14 @@ export default {
       // console.log(this.chosen_data_items)
     },
     choose_task_item (item, index) {
-      // let taskItem = document.getElementById('task-item-' + index)
+      let taskItem = document.getElementById('task-item-' + index)
       let name = document.getElementById('task-item-name-' + index)
       for (let i = 0; i < this.chosen_task_items.length; i++) {
         if (this.chosen_task_items[i] === this.transform_task_name(item.task)) {
           // 已选中，现在撤销选中
           this.chosen_task_items.splice(i, 1)
           name.style['color'] = 'black'
+          taskItem.style['border-left-width'] = '0'
           console.log(this.chosen_task_items)
           return
         }
@@ -261,6 +262,7 @@ export default {
       // 没选中，选中对象
       this.chosen_task_items.push(this.transform_task_name(item.task))
       name.style['color'] = 'dodgerblue'
+      taskItem.style['border-left-width'] = '4px'
       console.log(this.chosen_task_items)
     },
     generate_id (baseId, index) {
@@ -365,6 +367,9 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 5px 5px 5px 5px;
+  border-color: dodgerblue;
+  border-style: solid;
+  border-width: 0;
 }
 
 .task-item:hover {
