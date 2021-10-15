@@ -110,7 +110,13 @@
         </div>
         <el-divider></el-divider>
         <div id="chart-part">
-
+          <div id="combination-recommendation-charts" v-if="recommendation_mode_radio==='2'">
+            <div class="vega-chart" :id="generate_id('vega-chart-', index)"
+                 v-for="(item, index) in recommendation_chart" v-bind:key="index"></div>
+            <div id="vega-chart-test"></div>
+          </div>
+          <div id="individual-recommendation" v-if="recommendation_mode_radio==='1'">
+          </div>
         </div>
       </div>
     </div>
@@ -118,6 +124,9 @@
 </template>
 
 <script>
+// import * as vega from 'vega'
+import embed from 'vega-embed'
+
 export default {
   name: 'App',
   data () {
@@ -212,6 +221,10 @@ export default {
           description: 'Use regression or loess to show the variation trend.'
         }
       ],
+      small_chart_option: {
+        'width': 500,
+        'height': 500
+      },
       dataset_value: '',
       max_number_of_charts: 10,
       recommendation_mode_radio: '1',
@@ -221,7 +234,9 @@ export default {
       chosen_task_items: [],
       task_checked: [false, false, false, false, false, false, false, false,
         false, false, false, false, false, false, false, false, false],
-      display_by_task: false
+      display_by_task: false,
+      recommendation_chart: [],
+      recommendation_data: []
     }
   },
   methods: {
@@ -251,7 +266,35 @@ export default {
       this.$axios.post('api/Reco', requestData)
         .then(Response => {
           console.log(Response.data)
+          this.recommendation_chart = Response.data['Recos']
+          this.recommendation_data = Response.data['Data']
+          this.paint_chart()
         })
+    },
+
+    paint_chart () {
+      // TODO 绘制图表
+      if (this.recommendation_mode_radio === '1') {
+
+      } else if (this.recommendation_mode_radio === '2') {
+        for (let i = 0; i < this.recommendation_chart.length; i++) {
+          this.recommendation_chart[i]['props']['data'] = {'name': 'table', 'values': this.recommendation_data}
+          this.recommendation_chart[i]['props']['height'] = 200
+          this.recommendation_chart[i]['props']['width'] = 200
+          console.log(this.recommendation_chart[i].props)
+          // let chart = document.getElementById('vega-chart-' + i)
+          // chart.focus()
+          // new vega.View(vega.parse(this.recommendation_chart[i].props))
+          //   .renderer('canvas')
+          //   .initialize('#vega-chart-' + i)
+          //   .hover()
+          //   .run()
+          embed('#vega-chart-' + i, this.recommendation_chart[i].props)
+            .then(function (result) {
+
+            }).catch(console.error)
+        }
+      }
     },
 
     choose_data_item (item, index) {

@@ -13,6 +13,9 @@
   "dependencies": {
     "axios": "^0.23.0",
     "element-ui": "^2.15.6",
+    "vega": "^5.21.0",
+    "vega-embed": "^6.19.1",
+    "vega-lite": "^5.1.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
