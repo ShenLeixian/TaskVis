@@ -101,24 +101,52 @@
           </div>
         </el-card>
       </div>
+
       <div id="right-part">
         <div id="right-setting-part">
-          <el-switch v-model="display_by_task" active-text="Display by task"></el-switch>
+          <el-switch v-model="display_by_task" active-text="Display by task" @change="display_by_task_change()"></el-switch>
           <div id="task_tag_box">
             <el-tag class="task-tag" v-for="item in chosen_task_items" v-bind:key="item">{{transform_from_task_name(item)}}</el-tag>
           </div>
         </div>
         <el-divider></el-divider>
-        <div id="chart-part">
+        <div :key="1" v-if="!has_recommendation"></div>
+        <div id="chart-part" :key="2" v-else>
+          <div id="individual-recommendation-charts" v-if="recommendation_mode_radio==='1'">
+            <div id="individual-recommendation-display-by-task" v-if="display_by_task">
+              <div class="vega-chart-area-by-task" v-for="(item, index) in chosen_task_items" v-bind:key="index">
+                <div class="vega-chart-box-title" :id="generate_id('vega-chart-box-title-', item)"
+                     @click="show_more_chart(item)">
+                  {{transform_from_task_name(item)}}
+                  <div class="triangle-left"></div>
+                </div>
+                <div class="vega-chart-box-by-task" :id="generate_id('vega-chart-box-by-', item)">
+                  <div class="vega-chart" :id="generate_id('vega-chart-' + item + '-', chart_index)"
+                       v-for="(chart_item, chart_index) in recommendation_chart['Recos_nodedup'][item]['R1']"
+                       v-bind:key="chart_index" @click="show_chart_dialog(item, chart_index)"></div>
+                </div>
+              </div>
+            </div>
+            <div id="individual-recommendation-display-not-by-task" v-if="!display_by_task">
+              <div class="vega-chart-box">
+                <div class="vega-chart" :id="generate_id('vega-chart-', chart_index)"
+                     v-for="(chart_item, chart_index) in recommendation_chart['Recos_dedup']['R1']"
+                     v-bind:key="chart_index" @click="show_chart_dialog(null, chart_index)"></div>
+              </div>
+            </div>
+          </div>
           <div id="combination-recommendation-charts" v-if="recommendation_mode_radio==='2'">
             <div class="vega-chart" :id="generate_id('vega-chart-', index)"
-                 v-for="(item, index) in recommendation_chart" v-bind:key="index"></div>
+                 v-for="(item, index) in recommendation_chart" v-bind:key="index"
+                 @click="show_chart_dialog(null, index)"></div>
             <div id="vega-chart-test"></div>
-          </div>
-          <div id="individual-recommendation" v-if="recommendation_mode_radio==='1'">
           </div>
         </div>
       </div>
+
+      <el-dialog :visible.sync="chart_dialog_visible" width="1600px" center>
+        <div id="dialog-chart"></div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -221,10 +249,6 @@ export default {
           description: 'Use regression or loess to show the variation trend.'
         }
       ],
-      small_chart_option: {
-        'width': 500,
-        'height': 500
-      },
       dataset_value: '',
       max_number_of_charts: 10,
       recommendation_mode_radio: '1',
@@ -234,9 +258,14 @@ export default {
       chosen_task_items: [],
       task_checked: [false, false, false, false, false, false, false, false,
         false, false, false, false, false, false, false, false, false],
-      display_by_task: false,
-      recommendation_chart: [],
-      recommendation_data: []
+      display_by_task: true,
+      recommendation_chart: {
+        'Recos_dedup': {'R1': [], 'R2': [], 'R3': [], 'R4': []},
+        'Recos_nodedup': {'R1': [], 'R2': [], 'R3': [], 'R4': []}
+      },
+      recommendation_data: [],
+      has_recommendation: false,
+      chart_dialog_visible: false
     }
   },
   methods: {
@@ -254,49 +283,80 @@ export default {
           console.log(this.data_list)
         })
     },
-
     recommendation () {
       // TODO 将选中的数据发送到服务器，获取推荐图表
       let requestData = {}
       requestData['ColumnTypes'] = this.chosen_data_items
       requestData['task'] = this.chosen_task_items
       requestData['dataset'] = this.dataset_value
-      requestData['mode'] = (this.recommendation_mode_radio === 1) ? 2 : 5
+      requestData['mode'] = (this.recommendation_mode_radio === '1') ? 2 : 5
 
       this.$axios.post('api/Reco', requestData)
         .then(Response => {
           console.log(Response.data)
+          this.has_recommendation = true
           this.recommendation_chart = Response.data['Recos']
           this.recommendation_data = Response.data['Data']
-          this.paint_chart()
+          setTimeout(() => {
+            this.paint_chart()
+          }, 200)
         })
     },
-
     paint_chart () {
       // TODO 绘制图表
       if (this.recommendation_mode_radio === '1') {
-
+        if (this.display_by_task) {
+          for (let i = 0; i < this.chosen_task_items.length; i++) {
+            let task = this.chosen_task_items[i]
+            if (this.recommendation_chart['Recos_nodedup'][task] === undefined) continue
+            let R = {}
+            switch (this.ranking_scheme_radio) {
+              case '1':
+                R = this.recommendation_chart['Recos_nodedup'][task]['R1']
+                break
+              case '2':
+                R = this.recommendation_chart['Recos_nodedup'][task]['R2']
+                break
+              case '3':
+                R = this.recommendation_chart['Recos_nodedup'][task]['R3']
+                break
+              case '4':
+                R = this.recommendation_chart['Recos_nodedup'][task]['R4']
+                break
+            }
+            for (let j = 0; j < R.length && j < this.max_number_of_charts; j++) {
+              let props = this.set_chart_config(R[j]['props'])
+              embed('#vega-chart-' + task + '-' + j, props).then(function (result) {}).catch(console.error)
+            }
+          }
+        } else {
+          let R = {}
+          switch (this.ranking_scheme_radio) {
+            case '1':
+              R = this.recommendation_chart['Recos_dedup']['R1']
+              break
+            case '2':
+              R = this.recommendation_chart['Recos_dedup']['R2']
+              break
+            case '3':
+              R = this.recommendation_chart['Recos_dedup']['R3']
+              break
+            case '4':
+              R = this.recommendation_chart['Recos_dedup']['R4']
+              break
+          }
+          for (let j = 0; j < R.length && j < this.max_number_of_charts; j++) {
+            let props = this.set_chart_config(R[j]['props'])
+            embed('#vega-chart-' + j, props).then(function (result) {}).catch(console.error)
+          }
+        }
       } else if (this.recommendation_mode_radio === '2') {
-        for (let i = 0; i < this.recommendation_chart.length; i++) {
-          this.recommendation_chart[i]['props']['data'] = {'name': 'table', 'values': this.recommendation_data}
-          this.recommendation_chart[i]['props']['height'] = 200
-          this.recommendation_chart[i]['props']['width'] = 200
-          console.log(this.recommendation_chart[i].props)
-          // let chart = document.getElementById('vega-chart-' + i)
-          // chart.focus()
-          // new vega.View(vega.parse(this.recommendation_chart[i].props))
-          //   .renderer('canvas')
-          //   .initialize('#vega-chart-' + i)
-          //   .hover()
-          //   .run()
-          embed('#vega-chart-' + i, this.recommendation_chart[i].props)
-            .then(function (result) {
-
-            }).catch(console.error)
+        for (let i = 0; i < this.recommendation_chart.length && i < this.max_number_of_charts; i++) {
+          let props = this.set_chart_config(this.recommendation_chart[i]['props'])
+          embed('#vega-chart-' + i, props).then(function (result) {}).catch(console.error)
         }
       }
     },
-
     choose_data_item (item, index) {
       // TODO 选中数据种类
       let icon = document.getElementById('data-item-icon-' + index)
@@ -336,6 +396,74 @@ export default {
       taskItem.style['border-left-width'] = '4px'
       console.log(this.chosen_task_items)
     },
+    display_by_task_change () {
+      this.paint_chart()
+    },
+    show_chart_dialog (task, index) {
+      this.chart_dialog_visible = true
+      let props = {}
+      if (this.recommendation_mode_radio === '1') {
+        let R = 'R1'
+        switch (this.ranking_scheme_radio) {
+          case '1':
+            R = 'R1'
+            break
+          case '2':
+            R = 'R2'
+            break
+          case '3':
+            R = 'R3'
+            break
+          case '4':
+            R = 'R4'
+            break
+        }
+        if (this.display_by_task) {
+          props = this.set_dialog_chart_config(this.recommendation_chart['Recos_nodedup'][task][R][index]['props'])
+        } else {
+          props = this.set_dialog_chart_config(this.recommendation_chart['Recos_dedup'][R][index]['props'])
+        }
+      } else {
+        props = this.set_dialog_chart_config(this.recommendation_chart[index]['props'])
+      }
+      console.log(props)
+      embed('#dialog-chart', props)
+        .then(function (result) {
+        }).catch(console.error)
+    },
+    set_chart_config (props) {
+      props['data'] = {'name': 'table', 'values': this.recommendation_data}
+      props['height'] = 200
+      props['width'] = 200
+      if (props['encoding'] === undefined) {
+        props['encoding'] = {}
+      }
+      if (props['encoding']['x'] === undefined) {
+        props['encoding']['x'] = {}
+      }
+      if (props['encoding']['x']['axis'] === undefined) {
+        props['encoding']['x']['axis'] = {}
+      }
+      props['encoding']['x']['axis']['labelAngle'] = -45
+
+      return props
+    },
+    set_dialog_chart_config (props) {
+      props['height'] = 600
+      props['width'] = 1400
+      return props
+    },
+    show_more_chart (task) {
+      let box = document.getElementById('vega-chart-box-by-' + task)
+      let title = document.getElementById('vega-chart-box-title-' + task)
+      if (box.style['height'] === 'auto') {
+        title.style['width'] = 'fit-content'
+        box.style['height'] = '300px'
+      } else {
+        title.style['width'] = '500px'
+        box.style['height'] = 'auto'
+      }
+    },
     generate_id (baseId, index) {
       return baseId + index
     },
@@ -353,7 +481,7 @@ export default {
 #page {
   /*display: flex;*/
   /*flex-direction: column;*/
-  height: 1200px;
+  /*height: 1200px;*/
 }
 
 #title {
@@ -418,8 +546,8 @@ export default {
 }
 
 #data-box{
-  max-height: 30%;
-  overflow-y:auto;
+  max-height: 373px;
+  overflow-y: auto;
 }
 
 .data-item {
@@ -459,6 +587,11 @@ export default {
   align-items: flex-start;
 }
 
+#task-box {
+  height: 910px;
+  overflow-y: scroll;
+}
+
 .task-item {
   display: flex;
   flex-direction: column;
@@ -485,7 +618,64 @@ export default {
   margin: 5px 0 5px 0;
 }
 
+#combination-recommendation-charts {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
 .task-tag {
   margin: 2px 5px 2px 0;
+}
+
+.vega-chart-box {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 10px 20px;
+}
+
+.vega-chart-box-by-task {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  height: 300px;
+  overflow: hidden;
+  margin: 10px 20px;
+}
+
+.vega-chart-box-title {
+  font-size: larger;
+  padding-left: 20px;
+  background: dodgerblue;
+  color: white;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.vega-chart {
+  margin: 20px 20px;
+}
+
+.triangle-left {
+  margin-left: 20px;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-right: 50px solid white;
+  border-bottom: 20px solid transparent;
+}
+
+#chart-part {
+  height: 890px;
+  overflow-y: auto;
 }
 </style>
