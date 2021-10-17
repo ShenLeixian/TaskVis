@@ -10,7 +10,8 @@
         <el-card id="data-card"
                  class="card">
           <div slot="header"
-               class="clearfix">
+               class="clearfix card-title">
+            <img src="./assets/database.png" class="card-logo"/>
             <span>Data</span>
           </div>
           <el-select v-model="dataset_value"
@@ -43,7 +44,8 @@
         <el-card id="setting-card"
                  class="card">
           <div slot="header"
-               class="clearfix">
+               class="clearfix card-title">
+            <img src="./assets/setting.png" class="card-logo"/>
             <span>Setting</span>
           </div>
           <div id="max-number-of-charts">
@@ -65,13 +67,13 @@
           <div id="ranking-scheme">
             <div class="setting-title">Ranking Scheme</div>
             <el-radio v-model="ranking_scheme_radio"
-                      label="1">Complexity-based ranking</el-radio>
+                      label="1" @change="ranking_change()">Complexity-based ranking</el-radio>
             <el-radio v-model="ranking_scheme_radio"
-                      label="2">Reverse-complexity-based ranking</el-radio>
+                      label="2" @change="ranking_change()">Reverse-complexity-based ranking</el-radio>
             <el-radio v-model="ranking_scheme_radio"
-                      label="3">Interested-data-columns-based ranking</el-radio>
+                      label="3" @change="ranking_change()">Interested-data-columns-based ranking</el-radio>
             <el-radio v-model="ranking_scheme_radio"
-                      label="4">Tasks-coverage-based ranking</el-radio>
+                      label="4" @change="ranking_change()">Tasks-coverage-based ranking</el-radio>
           </div>
         </el-card>
         <el-button id="recommendation-button"
@@ -84,7 +86,8 @@
         <el-card id="task-list-card"
                  class="card">
           <div slot="header"
-               class="clearfix">
+               class="clearfix card-title">
+            <img src="./assets/task.png" class="card-logo"/>
             <span>Task List</span>
           </div>
           <div id="task-box">
@@ -104,7 +107,7 @@
 
       <div id="right-part">
         <div id="right-setting-part">
-          <el-switch v-model="display_by_task" active-text="Display by task" @change="display_by_task_change()"></el-switch>
+          <div id="display-by-task-switch"><el-switch  :disabled="recommendation_mode !== '1'" v-model="display_by_task" active-text="Display by task" @change="display_by_task_change()"></el-switch></div>
           <div id="task_tag_box">
             <el-tag class="task-tag" v-for="item in chosen_task_items" v-bind:key="item">{{transform_from_task_name(item)}}</el-tag>
           </div>
@@ -112,9 +115,9 @@
         <el-divider></el-divider>
         <div :key="1" v-if="!has_recommendation"></div>
         <div id="chart-part" :key="2" v-else>
-          <div id="individual-recommendation-charts" v-if="recommendation_mode_radio==='1'">
+          <div id="individual-recommendation-charts" v-if="recommendation_mode==='1'">
             <div id="individual-recommendation-display-by-task" v-if="display_by_task">
-              <div class="vega-chart-area-by-task" v-for="(item, index) in chosen_task_items" v-bind:key="index">
+              <div class="vega-chart-area-by-task" v-for="(item, index) in chosen_task_items" v-if="recommendation_chart['Recos_nodedup'][item] !== undefined" v-bind:key="index">
                 <div class="vega-chart-box-title" :id="generate_id('vega-chart-box-title-', item)"
                      @click="show_more_chart(item)">
                   {{transform_from_task_name(item)}}
@@ -129,13 +132,18 @@
             </div>
             <div id="individual-recommendation-display-not-by-task" v-if="!display_by_task">
               <div class="vega-chart-box">
-                <div class="vega-chart" :id="generate_id('vega-chart-', chart_index)"
-                     v-for="(chart_item, chart_index) in recommendation_chart['Recos_dedup']['R1']"
-                     v-bind:key="chart_index" @click="show_chart_dialog(null, chart_index)"></div>
+                <div class="vega-chart-with-task-title" v-for="(chart_item, chart_index) in recommendation_chart['Recos_dedup']['R1']" v-if="chart_index < max_number_of_charts_after_recommendation" v-bind:key="chart_index" >
+                  <div class="vega-chart-task-title" v-if="ranking_scheme_radio==='1'"><el-tag class="vega-chart-task-title-tag" v-for="(tag_item, tag_index) in recommendation_chart['Recos_dedup']['R1'][chart_index]['task']" v-bind:key="tag_index" size="mini">{{tag_item}}</el-tag></div>
+                  <div class="vega-chart-task-title" v-if="ranking_scheme_radio==='2'"><el-tag class="vega-chart-task-title-tag" v-for="(tag_item, tag_index) in recommendation_chart['Recos_dedup']['R2'][chart_index]['task']" v-bind:key="tag_index" size="mini">{{tag_item}}</el-tag></div>
+                  <div class="vega-chart-task-title" v-if="ranking_scheme_radio==='3'"><el-tag class="vega-chart-task-title-tag" v-for="(tag_item, tag_index) in recommendation_chart['Recos_dedup']['R3'][chart_index]['task']" v-bind:key="tag_index" size="mini">{{tag_item}}</el-tag></div>
+                  <div class="vega-chart-task-title" v-if="ranking_scheme_radio==='4'"><el-tag class="vega-chart-task-title-tag" v-for="(tag_item, tag_index) in recommendation_chart['Recos_dedup']['R4'][chart_index]['task']" v-bind:key="tag_index" size="mini">{{tag_item}}</el-tag></div>
+                  <div class="vega-chart" :id="generate_id('vega-chart-', chart_index)"
+                       @click="show_chart_dialog(null, chart_index)"></div>
+                </div>
               </div>
             </div>
           </div>
-          <div id="combination-recommendation-charts" v-if="recommendation_mode_radio==='2'">
+          <div id="combination-recommendation-charts" v-if="recommendation_mode==='2'">
             <div class="vega-chart" :id="generate_id('vega-chart-', index)"
                  v-for="(item, index) in recommendation_chart" v-bind:key="index"
                  @click="show_chart_dialog(null, index)"></div>
@@ -144,7 +152,7 @@
         </div>
       </div>
 
-      <el-dialog :visible.sync="chart_dialog_visible" width="1600px" center>
+      <el-dialog :visible.sync="chart_dialog_visible" width="1800px" center>
         <div id="dialog-chart"></div>
       </el-dialog>
     </div>
@@ -251,7 +259,9 @@ export default {
       ],
       dataset_value: '',
       max_number_of_charts: 10,
+      max_number_of_charts_after_recommendation: 10, // 按下推荐按钮后确定的数值
       recommendation_mode_radio: '1',
+      recommendation_mode: '0', // 按下推荐按钮后确定的数值
       ranking_scheme_radio: '1',
       data_list: [],
       chosen_data_items: [],
@@ -290,16 +300,15 @@ export default {
       requestData['task'] = this.chosen_task_items
       requestData['dataset'] = this.dataset_value
       requestData['mode'] = (this.recommendation_mode_radio === '1') ? 2 : 5
-
+      this.recommendation_mode = this.recommendation_mode_radio
+      this.max_number_of_charts_after_recommendation = this.max_number_of_charts
       this.$axios.post('api/Reco', requestData)
         .then(Response => {
           console.log(Response.data)
           this.has_recommendation = true
           this.recommendation_chart = Response.data['Recos']
           this.recommendation_data = Response.data['Data']
-          setTimeout(() => {
-            this.paint_chart()
-          }, 200)
+          this.paint_chart()
         })
     },
     paint_chart () {
@@ -451,6 +460,8 @@ export default {
     set_dialog_chart_config (props) {
       props['height'] = 600
       props['width'] = 1400
+      // delete props['height']
+      // delete props['width']
       return props
     },
     show_more_chart (task) {
@@ -464,6 +475,9 @@ export default {
         box.style['height'] = 'auto'
       }
     },
+    ranking_change () {
+      this.paint_chart()
+    },
     generate_id (baseId, index) {
       return baseId + index
     },
@@ -471,7 +485,12 @@ export default {
       return taskName.toLowerCase().replace(/ /g, '_')
     },
     transform_from_task_name (transTaskName) {
-      return transTaskName.replace(/_/g, ' ')
+      let s = transTaskName.replace(/_/g, ' ')
+      let ss = s.toLowerCase().split(/\s+/)
+      for (let i = 0; i < ss.length; i++) {
+        ss[i] = ss[i].slice(0, 1).toUpperCase() + ss[i].slice(1)
+      }
+      return ss.join(' ')
     }
   }
 }
@@ -546,7 +565,7 @@ export default {
 }
 
 #data-box{
-  max-height: 373px;
+  max-height: 365px;
   overflow-y: auto;
 }
 
@@ -588,7 +607,7 @@ export default {
 }
 
 #task-box {
-  height: 910px;
+  height: 908px;
   overflow-y: scroll;
 }
 
@@ -609,6 +628,17 @@ export default {
 .task-item-description {
   color: darkgray;
   font-size: small;
+}
+
+#right-setting-part {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 10px;
+}
+
+#display-by-task-switch {
+  margin: 10px 20px 10px 0px;
 }
 
 #task_tag_box {
@@ -665,6 +695,18 @@ export default {
   margin: 20px 20px;
 }
 
+.vega-chart-task-title {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 250px;
+  padding: 0 10px;
+}
+
+.vega-chart-task-title-tag {
+  margin: 2px;
+}
+
 .triangle-left {
   margin-left: 20px;
   width: 0;
@@ -677,5 +719,17 @@ export default {
 #chart-part {
   height: 890px;
   overflow-y: auto;
+}
+
+.card-logo {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
 }
 </style>
