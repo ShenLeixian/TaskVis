@@ -1,21 +1,23 @@
 # frontend
 
-> A Vue.js project
+要在本地启动，执行命令：
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+```sh
+npm install // 有一个包是npm安装的，保险起见npm install一下
+yarn install
+yarn start
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+如果`yarn start`时出现了vega-embed的报错，报错信息有如下字样：
+
+```
+| mark
+| awrap
+| async
+...(省略)
+```
+
+找到报错的包的代码块，将`async`删除即可。
+
