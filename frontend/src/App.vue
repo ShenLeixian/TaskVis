@@ -1,7 +1,7 @@
 <template>
   <div id="page">
     <div id="title-bar">
-      <div id="title">Visual Data Analysis with Task-based Recommendations</div>
+      <div id="title"><b>Visual Data Analysis with Task-based Recommendations</b></div>
     </div>
 
     <div id="main-part">
@@ -470,7 +470,7 @@ export default {
     show_more_chart (task) {
       let box = document.getElementById('vega-chart-box-by-' + task)
       let title = document.getElementById('vega-chart-box-title-' + task)
-      let logo = document.getElementById('vega-chart-box-title-logo-' + task)
+      // let logo = document.getElementById('vega-chart-box-title-logo-' + task)
       if (box.style['height'] === 'auto') {
         title.style['width'] = 'fit-content'
         box.style['height'] = '300px'
@@ -565,13 +565,15 @@ export default {
 }
 
 #task-list-card {
-  /*max-height: 80%;*/
+  /* max-height: 80%; */
+  /* max-height:800px; */
   overflow-y: auto;
 }
 
 #data-box{
-  max-height: 365px;
+  max-height: 620px;
   overflow-y: auto;
+  height: 544px;
 }
 
 .data-item {
@@ -612,7 +614,7 @@ export default {
 }
 
 #task-box {
-  height: 908px;
+  height: 1090px;
   overflow-y: scroll;
 }
 
@@ -728,7 +730,7 @@ export default {
 }
 
 #chart-part {
-  height: 890px;
+  height: 1080px;
   overflow-y: auto;
 }
 
