@@ -58,7 +58,7 @@
           <el-divider></el-divider>
           <div id="recommendation-mode">
             <div class="setting-title">Recommendation Mode</div>
-            <el-radio v-model="recommendation_mode_radio"
+            <el-radio  v-model="recommendation_mode_radio"
                       label="1">Individual Recommendation</el-radio>
             <el-radio v-model="recommendation_mode_radio"
                       label="2">Combination Recommendation</el-radio>
@@ -107,7 +107,7 @@
 
       <div id="right-part">
         <div id="right-setting-part">
-          <div id="display-by-task-switch"><el-switch  :disabled="recommendation_mode !== '1'" v-model="display_by_task" active-text="Display by task" @change="display_by_task_change()"></el-switch></div>
+          <div id="display-by-task-switch"><el-switch class="el-switch" :disabled="recommendation_mode !== '1'" v-model="display_by_task" active-text="Display by task" @change="display_by_task_change()"></el-switch></div>
           <div id="task_tag_box">
             <el-tag class="task-tag" v-for="item in chosen_task_items" v-bind:key="item">{{transform_from_task_name(item)}}</el-tag>
           </div>
@@ -506,6 +506,15 @@ export default {
   /*display: flex;*/
   /*flex-direction: column;*/
   /*height: 1200px;*/
+  font-weight: bold;
+}
+
+.el-radio {
+  font-weight: bold;
+}
+
+.el-switch {
+  font-weight: bold;
 }
 
 #title {
