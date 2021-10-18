@@ -313,7 +313,7 @@ def TaskVisAPIs(Data, ColumnTypes: List[dict] = [], task=None,DataAsp=None, Num=
         pass
     else:
         raise Exception(print("Data invaild."))
-
+    # print(ColumnTypes)
     if len(ColumnTypes) == 0:
         keys = list(Data.columns)
         for key in keys:
