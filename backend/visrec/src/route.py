@@ -21,7 +21,7 @@ def get_columns():
     # j = request.get_json()
     # dataset=j['dataset']
     dataset = request.args.get('dataset')
-    columns=[]
+    columns=None
     if dataset=='cars':
         columns=[
         {"field": "Name", "type": "nominal"},
@@ -46,7 +46,7 @@ def get_columns():
         {'field': 'confirmed', 'type': 'quantitative'},
         {'field': 'Population', 'type': 'quantitative'},
         {'field': 'date', 'type': 'temporal'}
-    ],
+    ]
     elif dataset=="weather": 
         columns=[
         {"field": "date", "type": "temporal"},
@@ -56,7 +56,7 @@ def get_columns():
         {"field": "location", "type": "nominal"},
         {"field": "wind", "type": "quantitative"},
         {"field": "weather", "type": "nominal"},
-    ],
+    ]
     elif dataset=="AirpotDeley": 
         columns=[
         {"field": "date", "type": "temporal"},
@@ -65,14 +65,14 @@ def get_columns():
         {"field": "time", "type": "quantitative"},
         {"field": "carrier", "type": "nominal"},
         {"field": "destcity", "type": "nominal"},
-    ],
+    ]
     elif dataset=="driving": 
         columns=[
         {"field": "year", "type": "temporal"},
         {"field": "miles", "type": "quantitative"},
         {"field": "gas", "type": "quantitative"},
         {"field": "side", "type": "nominal"},
-    ],
+    ]
     elif dataset=="HappinessRanking": 
         columns=[
         {"field": "Time", "type": "temporal"},
@@ -87,7 +87,7 @@ def get_columns():
         {"field": "Economy", "type": "quantitative"},
         {"field": "Generosity", "type": "quantitative"},
         {"field": "Dystopia Residual", "type": "quantitative"},
-    ],
+    ]
     elif dataset=="HollywoodsStories": 
         columns=[
         {"field": "Year", "type": "temporal"},
@@ -98,7 +98,7 @@ def get_columns():
         {"field": "Profitability", "type": "quantitative"},
         {"field": "Rotten Tomatoes", "type": "quantitative"},
         {"field": "Worldwide Gross", "type": "quantitative"},
-    ],
+    ]
     elif dataset=="movies": 
         columns=[
         {"field": "Release_Date", "type": "temporal"},
@@ -118,13 +118,15 @@ def get_columns():
         {"field": "IMDB_Rating", "type": "quantitative"},
         {"field": "IMDB_Votes", "type": "quantitative"},
     ]
-    return jsonify(columns)
+    jsdata = json.dumps(columns)
+    return Response(jsdata, mimetype='application/json')
+
 
 @app.route('/api/Reco', methods=['POST'])
 def Recommendation():
     j = request.get_json()
     Dataset=j['dataset']
-    ColumnTypes=j['ColumnTypes'][0]
+    ColumnTypes=j['ColumnTypes']
     task=j['task']
     mode=j['mode']
     url = './visrec/dataset/{}.json'.format(Dataset)
@@ -136,8 +138,13 @@ def Recommendation():
     # print("mode",mode)
     # print("-------------------------------------")
     Recos, Data = TaskVisAPIs(Data=DataJson, ColumnTypes=ColumnTypes, task=task, Num=0, mode=mode)
+    result={
+        "Data":Data,
+        "Recos":Recos
+    }
+    # Recos["data"]=Data
     # print(Recos)
-    return jsonify(Recos)
+    return jsonify(result)
 
 # def test()
 # TaskVisAPIs(Data=DataJson, ColumnTypes=ColumnTypes, task=task, Num=0, mode=1)

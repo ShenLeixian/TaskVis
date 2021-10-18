@@ -1,0 +1,38 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flask-python",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "cwd": "${workspaceFolder}/backend",
+            "env": {
+                "FLASK_APP": "./flask_server.py",
+                "FLASK_ENV": "development",
+                "FLASK_DEBUG": "0"
+            },
+            "args": [
+                "run",
+                "--no-debugger",
+                "--reload",
+                /**(我调试了一天测试出来的)
+                 * 这里一定要注意，flask默认的5000端口可能已经被window占用,务必修改！
+                 * flask默认端口是5000,如果发现数据无法返回，请换端口,可能你的端口5000已经被占用了！！！
+                 */
+                "--port", "8888"
+            ],
+            "jinja": true
+        },
+        {
+            "name": "Python: 当前文件",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }
+    ]
+}
