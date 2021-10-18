@@ -1,7 +1,7 @@
 <template>
   <div id="page">
     <div id="title-bar">
-      <div id="title">TaskVis: Task-oriented Visualization Recommendation</div>
+      <div id="title">Visual Data Analysis with Task-based Recommendations</div>
     </div>
 
     <div id="main-part">
@@ -118,11 +118,14 @@
           <div id="individual-recommendation-charts" v-if="recommendation_mode==='1'">
             <div id="individual-recommendation-display-by-task" v-if="display_by_task">
               <div class="vega-chart-area-by-task" v-for="(item, index) in chosen_task_items" v-if="recommendation_chart['Recos_nodedup'][item] !== undefined" v-bind:key="index">
-                <div class="vega-chart-box-title" :id="generate_id('vega-chart-box-title-', item)"
-                     @click="show_more_chart(item)">
-                  {{transform_from_task_name(item)}}
-                  <div class="triangle-left"></div>
-                </div>
+                <el-tooltip content="Click to display more." placement="top" effect="light">
+                  <div class="vega-chart-box-title" :id="generate_id('vega-chart-box-title-', item)"
+                       @click="show_more_chart(item)">
+                    {{transform_from_task_name(item)}}
+                    <img class="vega-chart-box-title-logo" :id="generate_id('vega-chart-box-title-logo-', item)" src="./assets/close.png"/>
+                    <div class="triangle-left"></div>
+                  </div>
+                </el-tooltip>
                 <div class="vega-chart-box-by-task" :id="generate_id('vega-chart-box-by-', item)">
                   <div class="vega-chart" :id="generate_id('vega-chart-' + item + '-', chart_index)"
                        v-for="(chart_item, chart_index) in recommendation_chart['Recos_nodedup'][item]['R1']"
@@ -152,7 +155,7 @@
         </div>
       </div>
 
-      <el-dialog :visible.sync="chart_dialog_visible" width="1800px" center>
+      <el-dialog id="dialog" :visible.sync="chart_dialog_visible" width="1800px" center>
         <div id="dialog-chart"></div>
       </el-dialog>
     </div>
@@ -467,6 +470,7 @@ export default {
     show_more_chart (task) {
       let box = document.getElementById('vega-chart-box-by-' + task)
       let title = document.getElementById('vega-chart-box-title-' + task)
+      let logo = document.getElementById('vega-chart-box-title-logo-' + task)
       if (box.style['height'] === 'auto') {
         title.style['width'] = 'fit-content'
         box.style['height'] = '300px'
@@ -474,6 +478,7 @@ export default {
         title.style['width'] = '500px'
         box.style['height'] = 'auto'
       }
+      return false
     },
     ranking_change () {
       this.paint_chart()
@@ -689,6 +694,12 @@ export default {
   align-items: center;
   justify-content: flex-end;
   cursor: pointer;
+}
+
+.vega-chart-box-title-logo {
+  width: 20px;
+  height: 20px;
+  margin-left: 20px;
 }
 
 .vega-chart {
