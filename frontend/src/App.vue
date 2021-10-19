@@ -580,9 +580,9 @@ export default {
 }
 
 #data-box{
-  max-height: 620px;
+  max-height: 800px;
   overflow-y: auto;
-  height: 544px;
+  height: 603px;
 }
 
 .data-item {
@@ -623,7 +623,7 @@ export default {
 }
 
 #task-box {
-  height: 1090px;
+  height: 1150px;
   overflow-y: scroll;
 }
 
@@ -647,6 +647,7 @@ export default {
 }
 
 #right-setting-part {
+  height: 24px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -654,14 +655,14 @@ export default {
 }
 
 #display-by-task-switch {
-  margin: 10px 20px 10px 0px;
+  margin: 27px 20px 10px 0px;
 }
 
 #task_tag_box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 5px 0 5px 0;
+  margin: 27px 0 5px 0;
 }
 
 #combination-recommendation-charts {
@@ -739,7 +740,7 @@ export default {
 }
 
 #chart-part {
-  height: 1080px;
+  height: 1157px;
   overflow-y: auto;
 }
 
