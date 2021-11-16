@@ -204,7 +204,10 @@ def RecommendationCombination(Data, ColumnTypes={},DataAsp=None,Num=10, task_lis
                 if mode==2:
                     res_with_rank={}
                     res_with_rank['R1']=Result2Json(Recos)
-                    res_with_rank['R2']=Result2Json(rank(Recos,2,ColumnTypes))
+                    try:
+                        res_with_rank['R2']=Result2Json(rank(Recos,2,ColumnTypes))
+                    except:
+                        res_with_rank['R2']=Result2Json(list(reversed(Recos)))
                     res_with_rank['R3']=Result2Json(rank(Recos,3,ColumnTypes))
                     res_with_rank['R4']=Result2Json(Recos)
                     Recos_nodedup[tasklist[i]]=res_with_rank
@@ -238,7 +241,10 @@ def RecommendationCombination(Data, ColumnTypes={},DataAsp=None,Num=10, task_lis
     if mode==2:
         res_with_rank2={}
         res_with_rank2['R1']=Result2Json(rank(Recos_dedup,1,ColumnTypes))
-        res_with_rank2['R2']=Result2Json(rank(Recos_dedup,2,ColumnTypes))
+        try:
+            res_with_rank2['R2']=Result2Json(rank(Recos_dedup,2,ColumnTypes))
+        except:
+            res_with_rank2['R2']=Result2Json(list(reversed(rank(Recos_dedup,1,ColumnTypes))))
         res_with_rank2['R3']=Result2Json(rank(Recos_dedup,3,ColumnTypes))
         res_with_rank2['R4']=Result2Json(rank(Recos_dedup,4,ColumnTypes))
     

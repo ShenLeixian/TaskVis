@@ -470,7 +470,7 @@ export default {
     show_more_chart (task) {
       let box = document.getElementById('vega-chart-box-by-' + task)
       let title = document.getElementById('vega-chart-box-title-' + task)
-      let logo = document.getElementById('vega-chart-box-title-logo-' + task)
+      // let logo = document.getElementById('vega-chart-box-title-logo-' + task)
       if (box.style['height'] === 'auto') {
         title.style['width'] = 'fit-content'
         box.style['height'] = '300px'
