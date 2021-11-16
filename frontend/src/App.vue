@@ -1,7 +1,7 @@
 <template>
   <div id="page">
     <div id="title-bar">
-      <div id="title">Visual Data Analysis with Task-based Recommendations</div>
+      <div id="title"><b>Visual Data Analysis with Task-based Recommendations</b></div>
     </div>
 
     <div id="main-part">
@@ -58,7 +58,7 @@
           <el-divider></el-divider>
           <div id="recommendation-mode">
             <div class="setting-title">Recommendation Mode</div>
-            <el-radio v-model="recommendation_mode_radio"
+            <el-radio  v-model="recommendation_mode_radio"
                       label="1">Individual Recommendation</el-radio>
             <el-radio v-model="recommendation_mode_radio"
                       label="2">Combination Recommendation</el-radio>
@@ -107,7 +107,7 @@
 
       <div id="right-part">
         <div id="right-setting-part">
-          <div id="display-by-task-switch"><el-switch  :disabled="recommendation_mode !== '1'" v-model="display_by_task" active-text="Display by task" @change="display_by_task_change()"></el-switch></div>
+          <div id="display-by-task-switch"><el-switch class="el-switch" :disabled="recommendation_mode !== '1'" v-model="display_by_task" active-text="Display by task" @change="display_by_task_change()"></el-switch></div>
           <div id="task_tag_box">
             <el-tag class="task-tag" v-for="item in chosen_task_items" v-bind:key="item">{{transform_from_task_name(item)}}</el-tag>
           </div>
@@ -506,6 +506,15 @@ export default {
   /*display: flex;*/
   /*flex-direction: column;*/
   /*height: 1200px;*/
+  font-weight: bold;
+}
+
+.el-radio {
+  font-weight: bold;
+}
+
+.el-switch {
+  font-weight: bold;
 }
 
 #title {
@@ -565,13 +574,15 @@ export default {
 }
 
 #task-list-card {
-  /*max-height: 80%;*/
+  /* max-height: 80%; */
+  /* max-height:800px; */
   overflow-y: auto;
 }
 
 #data-box{
-  max-height: 365px;
+  max-height: 800px;
   overflow-y: auto;
+  height: 603px;
 }
 
 .data-item {
@@ -612,7 +623,7 @@ export default {
 }
 
 #task-box {
-  height: 908px;
+  height: 1150px;
   overflow-y: scroll;
 }
 
@@ -636,6 +647,7 @@ export default {
 }
 
 #right-setting-part {
+  height: 24px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -643,14 +655,14 @@ export default {
 }
 
 #display-by-task-switch {
-  margin: 10px 20px 10px 0px;
+  margin: 27px 20px 10px 0px;
 }
 
 #task_tag_box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 5px 0 5px 0;
+  margin: 27px 0 5px 0;
 }
 
 #combination-recommendation-charts {
@@ -728,7 +740,7 @@ export default {
 }
 
 #chart-part {
-  height: 890px;
+  height: 1157px;
   overflow-y: auto;
 }
 

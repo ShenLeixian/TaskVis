@@ -10,7 +10,7 @@ import axios from 'axios'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://183.173.194.169:8888/'
+axios.defaults.baseURL = 'http://183.173.196.63:8888/'
 // axios.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
 /* eslint-disable no-new */
