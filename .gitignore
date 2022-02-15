@@ -1,6 +1,3 @@
 
 *.jar
 *.pyc
-backend/visrec/jars/numberbatch-en.txt
-backend/visrec/jars/numberbatch-en-19.08.txt.gz
-backend/visrec/jars/numberbatch-19.08.txt.gz
