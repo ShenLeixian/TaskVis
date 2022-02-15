@@ -2,7 +2,7 @@
 TaskVis is a task-oriented visualization recommendation system. This repository presents the demo of TaskVis. The interface of the system is as follows:
 <br>
 
-![image](https://github.com/ShenLeixian/TaskVis_demo/blob/master/interface.png)
+![image](https://github.com/ShenLeixian/TaskVis/blob/master/interface.png)
 
 ## backend
 * python：3.7, The java environment is required, and the JAVA_HOME environment variable should be configured.
