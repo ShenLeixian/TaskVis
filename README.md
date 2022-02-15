@@ -5,7 +5,7 @@ TaskVis is a task-oriented visualization recommendation system. This repository 
 ![image](https://github.com/ShenLeixian/TaskVis/blob/master/interface.png)
 
 ## backend
-* python：3.7, The java environment is required, and the JAVA_HOME environment variable should be configured.
+* Python：3.7. The java environment is required, and the JAVA_HOME environment variable should be configured.
 * [Clingo](https://github.com/potassco/clingo/releases): conda run `conda install -c potassco clingo`. MacOS run `brew install clingo`.
 * Packages：run `pip install -r requirements.txt` or `conda install --file requirements.txt`
 * Run the command to start the backend service `python .\waitress_server.py`
