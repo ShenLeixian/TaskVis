@@ -9,35 +9,8 @@
 % @constraint Can only bin quantitative or ordinal.
 :- type(E,T), bin(E,_), T != quantitative, T != ordinal.
 
-% @constraint Can only use log with quantitative.
-% :- log(E), not type(E,quantitative).
-
-% @constraint Can only use zero with quantitative.
-% :- zero(E), not type(E,quantitative).
-
-% @constraint Cannot use log scale with discrete (which includes binned).
-% :- log(E), discrete(E).
-
-% @constraint Cannot use log and zero together.
-% :- log(E), zero(E).
-
-% @constraint Cannot use log if the data is negative or zero.
-% :- log(E), field(E,F), extent(F,MIN,_), MIN <= 0.
-
 % @constraint Cannot bin and aggregate.
 :- bin(E,_), aggregate(E,_).
-
-% @constraint Oridnal only supports min, max, and median.
-% :- type(E,ordinal), aggregate(E,A), A != min, A != max, A != median.
-
-% @constraint Temporal only supports min and max.
-% :- type(E,temporal), aggregate(E,A), A != min, A != max.
-
-% @constraint Cannot aggregate nominal.
-% :- aggregate(E,_), type(E,nominal).
-
-% @constraint Detail cannot be aggregated.
-% :- channel(E,detail), aggregate(E,_).
 
 % @constraint Count has to be quantitative and not use a field.
 % :- aggregate(E,count), field(E,_).
@@ -47,15 +20,6 @@
 % @constraint Shape requires discrete and not ordered (nominal). Using ordinal would't make a difference in Vega-Lite.
 :- channel(E,shape), not type(E,nominal).
 
-% @constraint Detail requires nominal.
-% :- channel(E,detail), not type(E,nominal).
-
-% @constraint Size implies order so nominal is misleading.
-% :- channel(E,size), type(E,nominal).
-
-% @constraint Do not use size when data is negative as size implies that data is positive.
-% :- channel(E,size), enc_extent(E,MIN,MAX), MIN < 0, MAX > 0.
-
 % === Across encodings and between encodings and marks ===
 
 % @constraint Cannot use single channels twice.
@@ -64,26 +28,11 @@
 % @constraint There has to be at least one encoding. Otherwise, the visualization doesn't show anything.
 :- not encoding(_).
 
-% @constraint Row and column require discrete.
-% :- channel_continuous(row;column).
-
-% @constraint Don't use row without y. Just using y is simpler.
-% :- channel(_,row), not channel(_,y).
-
-% @constraint Don't use column without x. Just using x is simpler.
-% :- channel(_,column), not channel(_,x).
-
 % @constraint All encodings (if they have a channel) require field except if we have a count aggregate.
 :- not field(E,_), not aggregate(E,count), encoding(E).
 
 % @constraint Count should not have a field. Having a field doesn't make a difference.
 :- aggregate(E,count), field(E,_).
-
-% @constraint Text mark requires text channel.
-% :- mark(text), not channel(_,text).
-
-% @constraint Text channel requires text mark.
-% :- channel(_,text), not mark(text).
 
 % @constraint Point, tick, and bar require x or y channel.
 :- mark(point;bar), not channel(_,x), not channel(_,y).
@@ -100,21 +49,11 @@
 % @constraint Bar, tick, line, area require some continuous variable on x or y.
 :- mark(bar;area;line), not channel_continuous(x), not channel_continuous(y).
 
-% @constraint Bar and area mark requires scale of continuous to start at zero.
-% :- mark(bar;area), channel(E,x), orientation(horizontal), not zero(E).
-% :- mark(bar;area), channel(E,y), orientation(vertical), not zero(E).
-
 % @constraint Shape channel requires point mark.
 :- channel(_,shape), not mark(point).
 
 % @constraint Size only works with some marks. Vega-Lite can also size lines, and ticks but that would violate best practices.
 :- channel(_,size), not mark(point), not mark(text).
-
-% @constraint Detail requires aggregation. Detail adds a field to the group by. Detail could also be used to add information to tooltips. We may remove this later.
-% :- channel(_,detail), not aggregate(_,_).
-
-% @constraint Do not use log for bar or area mark as they are often misleading. We may remove this rule in the future.
-% :- mark(bar;area), log(E), channel(E,(x;y)).
 
 % @constraint Rect mark needs discrete x and y.
 :- mark(rect), not is_d_d.
@@ -124,9 +63,6 @@
 
 % @constraint Don't use count on x and y.
 :- channel(EX,x), channel(EY,y), aggregate(EX,count), aggregate(EY,count).
-
-% @constraint If we use aggregation, then all continuous fields need to be aggeragted.
-% :- aggregate(_,_), continuous(E), not aggregate(E,_).
 
 % @constraint Don't use multi count.
 % :- { aggregate(_,count) } = 2.
@@ -152,13 +88,6 @@
 
 % @constraint Need to stack if we use bar, area with discrete color.
 :- mark(bar;area), channel(E,color), discrete(E), not stack(_).
-
-% @constraint Can only use stack if we also use discrete color, or detail.
-% :- stack(_), not channel_discrete(color), not channel(_,detail).
-
-% @constraint If we use stack and detail, we also have to use quantitative color.
-% :- stack(_), channel(_,detail), not channel(_,color).
-% :- stack(_), channel(_,detail), channel(E,color), not aggregate(E,_).
 
 % @constraint Stack can only be on continuous.
 :- stack(E,_), discrete(E).
@@ -199,15 +128,6 @@
 % @constraint Cardinality has to be larger than 0.
 :- cardinality(_,C), C < 0.
 
-% @constraint Entropy has to be positive.
-% :- entropy(_,E), E < 0.
-
-% @constraint Extent only allowed for numbers (for now).
-% :- extent(F,_,_), not fieldtype(F,number).
-
-% @constraint Order has to be correct.
-% :- extent(_,MIN,MAX), MIN > MAX.
-
 % @constraint The name of a field cannot be the name of an encoding. This is to prevent errors coming from the shortcuts in define.lp.
 :- encoding(N), field(N).
 
@@ -223,20 +143,11 @@
 % @constraint can not bin the same var both in x/y and c/s/s.
 :- bin(N,_),bin(E,_),field(N,F),field(E,F),channel(N,(color;size;shape)).
 
-% @constraint can not aggregate var that will not show.
-% :- field(E,F),aggregate(E,_),channel(N,_),not field(N,F).
-
 % @constraint against without x channel
-% :- channel(_,y), not channel(_,x).
-% :- channel(_,x), not channel(_,y).
-% :- not channel(_,(x;y)).
 :- not channel(_,x).
 
 % @constraint datatime type against c/s/s.
 :- channel(E,(shape;size;color)),field(E,F),fieldtype(F,datetime).
-
-% @constraint line/area mark for color/size channels.
-% :- mark(line;area), channel(color;size),channel(_,(color;size)).
 
 % @constraint pie mark.
 :- mark(arc), channel(_,x),not channel(_,y).

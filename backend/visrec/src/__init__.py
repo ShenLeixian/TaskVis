@@ -8,7 +8,7 @@ from config import DevelopmentConfig, ProductionConfig
 app = Flask(__name__)
 mode = os.environ.get('FLASK_ENV', 'development')
 
-print('Loading config with mode', mode)
+# print('Loading config with mode', mode)
 if mode == 'development':
     app.config.from_object(DevelopmentConfig)
 elif mode == 'production':
