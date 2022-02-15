@@ -1,6 +1,8 @@
 # Visual Data Analysis with Task-based Recommendations
-TaskVis is a task-oriented visualization recommendation system. This repository presents the demo of TaskVis.
+TaskVis is a task-oriented visualization recommendation system. This repository presents the demo of TaskVis. The interface of the system is as follows:
+<br>
 ![image](https://github.com/ShenLeixian/TaskVis_demo/blob/master/interface.png)
+
 ## backend
 * python：3.7, The java environment is required, and the JAVA_HOME environment variable should be configured.
 * [Clingo](https://github.com/potassco/clingo/releases): conda run `conda install -c potassco clingo`. MacOS run `brew install clingo`.
