@@ -2,7 +2,7 @@
 TaskVis is a task-oriented visualization recommendation system. This repository presents the demo of TaskVis. The interface of the system is as follows:
 <br>
 
-![image](https://github.com/ShenLeixian/TaskVis/blob/master/interface.png)
+![image](./interface.png)
 
 ## backend
 * Python：3.7. The java environment is required, and the JAVA_HOME environment variable should be configured.
@@ -20,14 +20,30 @@ yarn install
 yarn start
 ```
 
-If the vega-embed error occurs during `yarn start`, the error information is as follows:
+A series of possible problems：
 
-```
-| mark
-| awrap
-| async
-...
-```
+1. If the vega-embed error occurs during `yarn start`, the error information is as follows:
 
-Find the code block of the package that reported the error and delete `async`.
+   ```
+   | mark
+   | awrap
+   | async
+   ...
+   ```
 
+   Find the code block of the package that reported the error and delete `async`.
+
+ 2. Next, if you have problems like the following again
+
+    ```
+    You may need an appropriate loader to handle this file type.
+    |
+    |   if (item.stroke && item.strokeOpacity !== 0 || item.fill && item.fillOpacity
+     !== 0) {
+    |     return { ...item,
+    |       strokeOpacity: 1,
+    |       stroke: '#000',
+    ...
+    ```
+
+    Find the code block of the package that reported the error and modify `...item`=>`item`
