@@ -16,3 +16,6 @@ six
 SQLAlchemy
 waitress
 Werkzeug
+pandas
+sklearn
+clyngor
